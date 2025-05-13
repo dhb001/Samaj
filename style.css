@@ -1556,8 +1556,26 @@ footer::before {
     margin-bottom: 2rem;
 }
 
-.gallery-heading h2 {
-    color: #333;
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    .gallery-heading h2 {
+        color: #333;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+/* Disclaimer Styles */
+.disclaimer {
+    background-color: var(--red-light);
+    color: var(--navy);
+    padding: 20px;
+    text-align: center;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.disclaimer p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
 }

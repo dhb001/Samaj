@@ -835,6 +835,10 @@ footer::before {
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
 
+.committee-col.white-bg {
+    background-color: var(--white);
+}
+
 .committee-col.gold-bg {
     background-color: var(--yellow-light);
 }
@@ -1578,4 +1582,77 @@ footer::before {
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.6;
+}
+
+/* Responsive styles for committee sections */
+@media (max-width: 768px) {
+    .committee-row {
+        flex-direction: column;
+    }
+    
+    .committee-col {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    
+    .committee-col:last-child {
+        margin-bottom: 0;
+    }
+    
+    /* Mobile view alternating backgrounds */
+    .committee-row:nth-child(odd) .committee-col:first-child {
+        background-color: var(--white);
+    }
+    
+    .committee-row:nth-child(odd) .committee-col:last-child {
+        background-color: var(--yellow-light);
+    }
+    
+    .committee-row:nth-child(even) .committee-col:first-child {
+        background-color: var(--yellow-light);
+    }
+    
+    .committee-row:nth-child(even) .committee-col:last-child {
+        background-color: var(--white);
+    }
+}
+
+/* Achievements Grid Styles */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.achievement-item {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.achievement-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.achievement-item h3 {
+    color: var(--navy);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.achievement-item p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .achievements-grid {
+        grid-template-columns: 1fr;
+    }
 }

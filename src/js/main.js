@@ -6,16 +6,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Load header component
     loadHeader();
-    
+
     // Load footer component
     loadFooter();
-    
-    // Load breadcrumb component if placeholder exists
-    loadBreadcrumb();
-    
+
     // Slideshow functionality
     initSlideshow();
-    
+
     // Mobile navigation is now handled in the header
     // initMobileNav();
     
@@ -33,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Committee page animations
     initCommitteeAnimations();
-    
+
     // Check if we're on the history-in-pictures page
     if (document.querySelector('.gallery-grid')) {
         // Load gallery images
@@ -104,6 +101,7 @@ function loadHeader() {
                 setTimeout(() => {
                     initMobileNav();
                     initHeaderScrollBehavior();
+                    highlightActiveLink();
                     console.log('Header scripts executed manually');
                 }, 300);
             })
@@ -1023,71 +1021,6 @@ function loadTimelineData(lang) {
 }
 
 /**
- * Load breadcrumb component
- */
-function loadBreadcrumb() {
-    const breadcrumbPlaceholder = document.getElementById('breadcrumb-placeholder');
-    if (breadcrumbPlaceholder) {
-        fetch('../components/breadcrumb.html')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(data => {
-                breadcrumbPlaceholder.innerHTML = data;
-                
-                // Set page-specific breadcrumb data
-                configureBreadcrumb();
-            })
-            .catch(error => {
-                console.error('Error loading breadcrumb:', error);
-            });
-    }
-}
-
-/**
- * Configure breadcrumb based on current page
- */
-function configureBreadcrumb() {
-    const parentLink = document.getElementById('breadcrumb-parent');
-    const currentPage = document.getElementById('breadcrumb-current');
-    
-    if (!parentLink || !currentPage) return;
-    
-    // Get current page path
-    const path = window.location.pathname;
-    const pageName = path.split('/').pop();
-    
-    // Configure breadcrumb based on current page
-    switch(pageName) {
-        case 'events-timeline.html':
-            parentLink.textContent = 'Our Samaj';
-            parentLink.href = '#our-samaj';
-            currentPage.textContent = 'Journey of Development';
-            break;
-        case 'charitable-trust.html':
-            parentLink.textContent = 'Initiatives';
-            parentLink.href = '#initiatives';
-            currentPage.textContent = 'Charitable Trust';
-            break;
-        case 'youth-league.html':
-            parentLink.textContent = 'Committees';
-            parentLink.href = '#committees';
-            currentPage.textContent = 'Youth League';
-            break;
-        // Add more pages as needed
-        default:
-            // For any other page, try to make a best guess
-            const title = document.title;
-            currentPage.textContent = title.split(' - ')[0];
-            parentLink.textContent = 'Samaj';
-            parentLink.href = 'index.html';
-    }
-}
-
-/**
  * Initialize lightbox functionality for gallery images
  */
 function initGalleryLightbox() {
@@ -1509,3 +1442,26 @@ function initCommitteeAnimations() {
         });
     }
 } 
+
+function highlightActiveLink() {
+    const currentPage = window.location.pathname.split('/').pop(); // e.g. 'board-and-management.html'
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href').split('/').pop();
+
+        if (linkPage === currentPage) {
+            link.classList.add('active');
+
+            // Now highlight the parent dropdown link too
+            const parentLi = link.closest('li.has-dropdown');
+            if (parentLi) {
+                // Find the first direct child <a> of the parent dropdown li and add active class
+                const parentLink = parentLi.querySelector(':scope > a.nav-link');
+                if (parentLink) {
+                    parentLink.classList.add('active');
+                }
+            }
+        }
+    });
+}
